@@ -9,14 +9,14 @@ interface PDFToolsLogoProps {
 /**
  * PDF Tools Logo Component
  * A professional, integrated SVG logo combining a document icon with text
- * The logo features a stylized PDF document with a subtle transformation arrow
+ * The logo features a PDF document with "PDF" text inside and a transformation arrow
  */
-export function PDFToolsLogo({ className = "", width = 180, height = 40 }: PDFToolsLogoProps) {
+export function PDFToolsLogo({ className = "", width = 200, height = 40 }: PDFToolsLogoProps) {
   return (
     <svg
       width={width}
       height={height}
-      viewBox="0 0 180 40"
+      viewBox="0 0 200 40"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={className}
@@ -36,10 +36,18 @@ export function PDFToolsLogo({ className = "", width = 180, height = 40 }: PDFTo
           className="fill-primary/60"
         />
         
-        {/* Document Lines */}
-        <line x1="12" y1="16" x2="24" y2="16" className="stroke-primary-foreground" strokeWidth="1.5" strokeLinecap="round" />
-        <line x1="12" y1="20" x2="24" y2="20" className="stroke-primary-foreground" strokeWidth="1.5" strokeLinecap="round" />
-        <line x1="12" y1="24" x2="20" y2="24" className="stroke-primary-foreground" strokeWidth="1.5" strokeLinecap="round" />
+        {/* PDF Text inside document */}
+        <text
+          x="18"
+          y="24"
+          fontFamily="system-ui, -apple-system, sans-serif"
+          fontSize="9"
+          fontWeight="700"
+          className="fill-primary-foreground"
+          textAnchor="middle"
+        >
+          PDF
+        </text>
         
         {/* Transformation Arrow */}
         <circle cx="32" cy="20" r="6" className="fill-accent" />
@@ -57,9 +65,9 @@ export function PDFToolsLogo({ className = "", width = 180, height = 40 }: PDFTo
         {/* PDF */}
         <text
           x="46"
-          y="25"
+          y="26"
           fontFamily="system-ui, -apple-system, sans-serif"
-          fontSize="18"
+          fontSize="24"
           fontWeight="700"
           className="fill-foreground"
         >
@@ -68,10 +76,10 @@ export function PDFToolsLogo({ className = "", width = 180, height = 40 }: PDFTo
         
         {/* Tools */}
         <text
-          x="82"
-          y="25"
+          x="94"
+          y="26"
           fontFamily="system-ui, -apple-system, sans-serif"
-          fontSize="18"
+          fontSize="24"
           fontWeight="600"
           className="fill-foreground/80"
         >

@@ -1,0 +1,37 @@
+<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Document Icon -->
+  <g>
+    <!-- Main Document Shape -->
+    <path
+      d="M8 4C8 2.89543 8.89543 2 10 2H20L28 10V34C28 35.1046 27.1046 36 26 36H10C8.89543 36 8 35.1046 8 34V4Z"
+      fill="#d32f2f"
+    />
+    
+    <!-- Folded Corner -->
+    <path
+      d="M20 2V8C20 9.10457 20.8954 10 22 10H28L20 2Z"
+      fill="#a72828"
+    />
+    
+    <!-- PDF Text -->
+    <text
+      x="18"
+      y="24"
+      font-family="system-ui, -apple-system, sans-serif"
+      font-size="9"
+      font-weight="700"
+      fill="white"
+      text-anchor="middle"
+    >PDF</text>
+    
+    <!-- Transformation Arrow -->
+    <circle cx="32" cy="20" r="6" fill="#ffc107" />
+    <path
+      d="M30 20H34M34 20L32 18M34 20L32 22"
+      stroke="#1a1a1a"
+      stroke-width="1.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  </g>
+</svg>
