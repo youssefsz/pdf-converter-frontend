@@ -4,9 +4,10 @@ import type React from "react"
 
 import { useState, useCallback } from "react"
 import { useRouter } from "next/navigation"
-import { ArrowLeft, Upload, FileText, X } from "lucide-react"
+import { ArrowLeft, Upload, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { PdfToTextIcon } from "@/components/ui/pdf-to-text-icon"
 
 export default function PdfToTextPage() {
   const router = useRouter()
@@ -45,17 +46,20 @@ export default function PdfToTextPage() {
   }
 
   return (
-    <div className="min-h-screen py-20">
+    <div className="min-h-screen pt-28">
       <div className="container mx-auto px-4 max-w-3xl">
-        <Button variant="ghost" onClick={() => router.push("/")} className="mb-8">
-          <ArrowLeft className="w-4 h-4 mr-2" />
+        <Button 
+          variant="outline" 
+          size="lg"
+          onClick={() => router.push("/")} 
+          className="mb-8 font-semibold shadow-sm hover:shadow-md transition-all border-2"
+        >
+          <ArrowLeft className="w-5 h-5 mr-2" />
           Back to Home
         </Button>
 
         <div className="text-center mb-12">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-secondary/20 to-primary/20 mb-4">
-            <FileText className="w-8 h-8 text-secondary" />
-          </div>
+          <PdfToTextIcon className="w-20 h-20 mx-auto mb-4 text-secondary" />
           <h1 className="text-4xl font-bold mb-3">PDF to Text</h1>
           <p className="text-lg text-muted-foreground">Extract text content from your PDF documents</p>
         </div>
@@ -71,7 +75,7 @@ export default function PdfToTextPage() {
                 onDragOver={handleDragOver}
                 onDragLeave={handleDragLeave}
                 onDrop={handleDrop}
-                className={`border-2 border-dashed rounded-xl p-12 text-center transition-colors ${
+                className={`border-2 border-dashed rounded-xl p-12 text-center transition-colors cursor-pointer ${
                   isDragging ? "border-primary bg-primary/5" : "border-border hover:border-primary/50"
                 }`}
               >
@@ -85,7 +89,7 @@ export default function PdfToTextPage() {
                   className="hidden"
                   id="file-upload"
                 />
-                <label htmlFor="file-upload">
+                <label htmlFor="file-upload" className="cursor-pointer">
                   <Button asChild>
                     <span>Select PDF File</span>
                   </Button>
@@ -96,7 +100,7 @@ export default function PdfToTextPage() {
                 <div className="flex items-center justify-between p-4 bg-muted rounded-lg">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-lg bg-secondary/10 flex items-center justify-center">
-                      <FileText className="w-5 h-5 text-secondary" />
+                      <PdfToTextIcon className="w-5 h-5 text-secondary" />
                     </div>
                     <div>
                       <p className="font-medium">{file.name}</p>
