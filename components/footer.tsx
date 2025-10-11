@@ -92,7 +92,7 @@ export function Footer() {
                   <Mail className="w-5 h-5" />
                 </a>
                 <a 
-                  href="https://github.com/youssefszz" 
+                  href="https://github.com/youssefsz" 
                   target="_blank" 
                   rel="noopener noreferrer" 
                   className="text-muted-foreground hover:text-primary transition-colors cursor-pointer"
