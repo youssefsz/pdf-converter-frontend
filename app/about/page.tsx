@@ -75,6 +75,16 @@ export default function AboutPage() {
       logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg",
       darkLogo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/express/express-original-wordmark.svg",
     },
+    {
+      name: "TypeScript",
+      description: "Typed JavaScript",
+      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
+    },
+    {
+      name: "PDF.js",
+      description: "PDF rendering library",
+      logo: "https://mozilla.github.io/pdf.js/images/logo.svg",
+    },
   ]
 
   return (
