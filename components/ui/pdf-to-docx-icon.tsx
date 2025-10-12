@@ -1,10 +1,10 @@
 /**
- * Custom SVG icon component for PDF to Text conversion
- * Shows a PDF document converting to text lines with an arrow
+ * Custom SVG icon component for PDF to DOCX conversion
+ * Shows a PDF document converting to a Word document with an arrow
  * 
  * @param className - Optional CSS classes for styling
  */
-export function PdfToTextIcon({ className = "" }: { className?: string }) {
+export function PdfToDocxIcon({ className = "" }: { className?: string }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -24,10 +24,12 @@ export function PdfToTextIcon({ className = "" }: { className?: string }) {
       <line x1="9" y1="7" x2="13" y2="7" />
       <polyline points="11 5 13 7 11 9" />
       
-      {/* Right: Text Lines */}
-      <line x1="15" y1="4" x2="23" y2="4" />
-      <line x1="15" y1="7" x2="23" y2="7" />
-      <line x1="15" y1="10" x2="21" y2="10" />
+      {/* Right: DOCX Document (Word-style with folded corner) */}
+      <path d="M 16 2 L 22 2 L 22 5 L 19 5 L 19 2 Z" fill="currentColor" opacity="0.3" />
+      <rect x="16" y="2" width="7" height="10" rx="1" />
+      <line x1="18" y1="6" x2="21" y2="6" />
+      <line x1="18" y1="8" x2="21" y2="8" />
+      <line x1="18" y1="10" x2="20" y2="10" />
     </svg>
   )
 }

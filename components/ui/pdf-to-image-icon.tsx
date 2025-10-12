@@ -18,9 +18,7 @@ export function PdfToImageIcon({ className = "" }: { className?: string }) {
     >
       {/* Left: PDF Document */}
       <rect x="1" y="2" width="7" height="10" rx="1" />
-      <line x1="3" y1="5" x2="6" y2="5" />
-      <line x1="3" y1="7" x2="6" y2="7" />
-      <line x1="3" y1="9" x2="5" y2="9" />
+      <text x="4.5" y="8" fontSize="2.5" fontWeight="1" fill="currentColor" textAnchor="middle">PDF</text>
       
       {/* Arrow */}
       <line x1="9" y1="7" x2="13" y2="7" />
@@ -30,12 +28,6 @@ export function PdfToImageIcon({ className = "" }: { className?: string }) {
       <rect x="15" y="2" width="8" height="10" rx="1" />
       <circle cx="18" cy="5.5" r="1.2" />
       <polyline points="15 11 17.5 8 19.5 10 21 8.5 23 11" />
-      
-      {/* PDF Label */}
-      <text x="5.5" y="19" fontSize="4.5" fill="currentColor" textAnchor="middle">PDF</text>
-      
-      {/* IMG Label */}
-      <text x="19" y="19" fontSize="4.5" fill="currentColor" textAnchor="middle">IMG</text>
     </svg>
   )
 }

@@ -6,7 +6,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { PdfToImageIcon } from "@/components/ui/pdf-to-image-icon"
 import { PdfToTextIcon } from "@/components/ui/pdf-to-text-icon"
 import { ImageToPdfIcon } from "@/components/ui/image-to-pdf-icon"
-import { FileStack, Split, Minimize2, FileText, RotateCw, Droplet, Lock, Edit } from "lucide-react"
+import { PdfToDocxIcon } from "@/components/ui/pdf-to-docx-icon"
+import { FileStack, Split, Minimize2, RotateCw, Droplet, Lock, Edit } from "lucide-react"
 import { useEffect, useState } from "react"
 
 // Animation variants for smooth, elegant animations
@@ -147,6 +148,21 @@ export default function HomePage() {
             </Link>
           </motion.div>
 
+          <motion.div variants={cardVariant}>
+            <Link href="/pdf-to-docx" className="group cursor-pointer block h-full">
+              <Card className="h-full transition-all duration-300 hover:shadow-lg hover:scale-105 hover:border-primary/50">
+                <CardHeader className="text-center pb-4">
+                  <PdfToDocxIcon className="w-20 h-20 mx-auto mb-4 text-primary" />
+                  <CardTitle className="text-2xl">PDF to DOCX</CardTitle>
+                  <CardDescription className="text-base">Convert PDF documents to editable Word files</CardDescription>
+                </CardHeader>
+                <CardContent className="text-center">
+                  <p className="text-sm text-muted-foreground">Extract text and images to Microsoft Word format</p>
+                </CardContent>
+              </Card>
+            </Link>
+          </motion.div>
+
           {/* Coming Soon Tools */}
           <motion.div className="relative group" variants={cardVariant}>
             <Card className="h-full transition-all duration-300 cursor-not-allowed">
@@ -199,27 +215,6 @@ export default function HomePage() {
               </CardHeader>
               <CardContent className="text-center">
                 <p className="text-sm text-muted-foreground">Optimize PDFs for web and email sharing</p>
-              </CardContent>
-            </Card>
-            <div className="absolute inset-0 bg-background/50 backdrop-blur-[2px] rounded-lg flex items-center justify-center transition-all duration-300 group-hover:bg-background/60">
-              <div className="text-center space-y-2">
-                <div className="text-3xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent drop-shadow-lg">
-                  Coming Soon
-                </div>
-                <div className="text-sm text-muted-foreground font-medium">We're working on it!</div>
-              </div>
-            </div>
-          </motion.div>
-
-          <motion.div className="relative group" variants={cardVariant}>
-            <Card className="h-full transition-all duration-300 cursor-not-allowed">
-              <CardHeader className="text-center pb-4">
-                <FileText className="w-20 h-20 mx-auto mb-4 text-muted-foreground" />
-                <CardTitle className="text-2xl">PDF to Word</CardTitle>
-                <CardDescription className="text-base">Convert PDF documents to editable Word files</CardDescription>
-              </CardHeader>
-              <CardContent className="text-center">
-                <p className="text-sm text-muted-foreground">Maintain formatting and layout in DOCX</p>
               </CardContent>
             </Card>
             <div className="absolute inset-0 bg-background/50 backdrop-blur-[2px] rounded-lg flex items-center justify-center transition-all duration-300 group-hover:bg-background/60">

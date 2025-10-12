@@ -251,6 +251,70 @@ export function formatFileSize(bytes: number): string {
 }
 
 /**
+ * Convert PDF to DOCX (Microsoft Word) format
+ * @param file - PDF file to convert
+ * @param options - Conversion options (includeImages, preservePageBreaks)
+ * @param onProgress - Callback for upload progress
+ * @returns Blob containing the generated DOCX file
+ */
+export async function convertPdfToDocx(
+  file: File,
+  options: {
+    includeImages?: boolean
+    preservePageBreaks?: boolean
+  } = {},
+  onProgress?: (progress: number) => void
+): Promise<Blob> {
+  const formData = new FormData()
+  formData.append('pdf', file)
+
+  const { includeImages = true, preservePageBreaks = true } = options
+
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest()
+
+    // Track upload progress
+    xhr.upload.addEventListener('progress', (e) => {
+      if (e.lengthComputable && onProgress) {
+        const progress = Math.round((e.loaded * 100) / e.total)
+        onProgress(progress)
+      }
+    })
+
+    xhr.addEventListener('load', () => {
+      if (xhr.status === 200) {
+        const blob = xhr.response
+        resolve(blob)
+      } else {
+        try {
+          const error = JSON.parse(xhr.responseText)
+          reject(new Error(error.message || 'Conversion failed'))
+        } catch {
+          reject(new Error('Conversion failed'))
+        }
+      }
+    })
+
+    xhr.addEventListener('error', () => {
+      reject(new Error('Network error occurred'))
+    })
+
+    xhr.addEventListener('abort', () => {
+      reject(new Error('Upload cancelled'))
+    })
+
+    const queryParams = new URLSearchParams({
+      includeImages: includeImages.toString(),
+      preservePageBreaks: preservePageBreaks.toString(),
+    })
+
+    xhr.open('POST', `${API_BASE_URL}/pdf/pdf-to-docx?${queryParams}`)
+    xhr.responseType = 'blob'
+    xhr.send(formData)
+  })
+}
+
+/**
  * Server Health Check Response
  */
 export interface ServerHealthResponse {
