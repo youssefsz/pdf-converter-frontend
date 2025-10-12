@@ -6,12 +6,17 @@ import { motion, AnimatePresence } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { AnimatedThemeToggler } from "@/components/ui/animated-theme-toggler"
 import { PDFToolsLogo } from "@/components/ui/pdf-tools-logo"
+import { ServerStatusIndicator } from "@/components/ui/server-status-indicator"
+import { HamburgerMenuButton } from "@/components/ui/hamburger-menu-button"
+import { useServerHealth } from "@/hooks/use-server-health"
 import { useState } from "react"
-import { Menu, X } from "lucide-react"
 
 export function Navbar() {
   const pathname = usePathname()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  
+  // Server health monitoring
+  const { status, lastChecked, error, checkHealth } = useServerHealth()
 
   const navLinks = [
     { href: "/", label: "Home" },
@@ -61,33 +66,31 @@ export function Navbar() {
               ))}
             </div>
 
-            {/* Right Side - Theme Toggle & Mobile Menu Button */}
-            <div className="flex items-center gap-2">
+            {/* Right Side - Server Status, Theme Toggle & Mobile Menu Button */}
+            <div className="flex items-center gap-1 md:gap-2">
+              {/* Server Status Indicator */}
+              <ServerStatusIndicator
+                status={status}
+                lastChecked={lastChecked}
+                error={error}
+                onRecheck={checkHealth}
+              />
+              
+              {/* Separator - Hidden on mobile */}
+              <div className="hidden md:block h-6 w-px bg-border/40 mx-1" />
+              
               <AnimatedThemeToggler
                 className="rounded-full p-2 hover:bg-accent/50 transition-colors"
                 aria-label="Toggle theme"
               />
               
               {/* Mobile Menu Toggle Button */}
-              <Button
-                variant="ghost"
-                size="sm"
-                className="md:hidden p-2 hover:bg-accent/50"
-                onClick={toggleMobileMenu}
-                aria-label="Toggle menu"
-              >
-                <motion.div
-                  initial={false}
-                  animate={{ rotate: isMobileMenuOpen ? 90 : 0 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  {isMobileMenuOpen ? (
-                    <X className="h-5 w-5" />
-                  ) : (
-                    <Menu className="h-5 w-5" />
-                  )}
-                </motion.div>
-              </Button>
+              <div className="md:hidden">
+                <HamburgerMenuButton
+                  isOpen={isMobileMenuOpen}
+                  onClick={toggleMobileMenu}
+                />
+              </div>
             </div>
           </div>
         </div>

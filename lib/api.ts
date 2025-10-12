@@ -250,3 +250,47 @@ export function formatFileSize(bytes: number): string {
   return Math.round((bytes / Math.pow(k, i)) * 100) / 100 + ' ' + sizes[i]
 }
 
+/**
+ * Server Health Check Response
+ */
+export interface ServerHealthResponse {
+  status: 'success' | 'error'
+  message: string
+  timestamp: string
+  uptime?: number
+  environment?: string
+}
+
+/**
+ * Check server health status
+ * @returns Promise with server health status
+ * @throws Error if server is unreachable
+ */
+export async function checkServerHealth(): Promise<ServerHealthResponse> {
+  try {
+    const response = await fetch(`${API_BASE_URL}/health`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      // Set a timeout to prevent hanging requests
+      signal: AbortSignal.timeout(10000), // 10 second timeout
+    })
+
+    if (!response.ok) {
+      throw new Error(`Server responded with status: ${response.status}`)
+    }
+
+    const data: ServerHealthResponse = await response.json()
+    return data
+  } catch (error) {
+    // Handle network errors, timeouts, and other failures
+    if (error instanceof Error) {
+      throw new Error(error.name === 'TimeoutError' 
+        ? 'Server health check timed out' 
+        : error.message || 'Failed to reach server')
+    }
+    throw new Error('Failed to reach server')
+  }
+}
+

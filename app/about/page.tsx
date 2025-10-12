@@ -85,6 +85,11 @@ export default function AboutPage() {
       description: "PDF rendering library",
       logo: "https://mozilla.github.io/pdf.js/images/logo.svg",
     },
+    {
+      name: "Pdf-lib.js",
+      description: "PDF creation & modification",
+      logo: "https://pdf-lib.js.org/img/logo-full.svg",
+    },
   ]
 
   return (
