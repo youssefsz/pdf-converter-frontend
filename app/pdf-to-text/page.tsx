@@ -170,7 +170,7 @@ export default function PdfToTextPage() {
           animate="visible"
           variants={fadeInUp}
         >
-          <PdfToTextIcon className="w-20 h-20 mx-auto mb-4 text-secondary" />
+          <PdfToTextIcon className="w-20 h-20 mx-auto mb-4 text-primary" />
           <h1 className="text-4xl font-bold mb-3">PDF to Text</h1>
           <p className="text-lg text-muted-foreground">Extract text content and images from your PDF documents</p>
         </motion.div>
@@ -199,8 +199,8 @@ export default function PdfToTextPage() {
                     onDrop={handleDrop}
                     className={`border-2 border-dashed rounded-xl p-12 text-center transition-all cursor-pointer ${
                       isDragging 
-                        ? "border-primary bg-primary/5 scale-105" 
-                        : "border-border hover:border-primary/50"
+                        ? "border-accent bg-accent/5 scale-105" 
+                        : "border-border hover:border-accent/50"
                     }`}
                   >
                     <Upload className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
@@ -235,8 +235,8 @@ export default function PdfToTextPage() {
                       transition={{ type: "spring", stiffness: 200, damping: 20 }}
                     >
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-lg bg-secondary/10 flex items-center justify-center">
-                          <PdfToTextIcon className="w-5 h-5 text-secondary" />
+                        <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                          <PdfToTextIcon className="w-5 h-5 text-primary" />
                         </div>
                         <div>
                           <p className="font-medium">{file.name}</p>

@@ -5,6 +5,7 @@ import { motion } from "framer-motion"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { PdfToImageIcon } from "@/components/ui/pdf-to-image-icon"
 import { PdfToTextIcon } from "@/components/ui/pdf-to-text-icon"
+import { ImageToPdfIcon } from "@/components/ui/image-to-pdf-icon"
 import { FileStack, Split, Minimize2, FileText, RotateCw, Droplet, Lock, Edit } from "lucide-react"
 import { useEffect, useState } from "react"
 
@@ -120,12 +121,27 @@ export default function HomePage() {
             <Link href="/pdf-to-text" className="group cursor-pointer block h-full">
               <Card className="h-full transition-all duration-300 hover:shadow-lg hover:scale-105 hover:border-primary/50">
                 <CardHeader className="text-center pb-4">
-                  <PdfToTextIcon className="w-20 h-20 mx-auto mb-4 text-secondary" />
+                  <PdfToTextIcon className="w-20 h-20 mx-auto mb-4 text-primary" />
                   <CardTitle className="text-2xl">PDF to Text</CardTitle>
                   <CardDescription className="text-base">Extract text content from your PDF documents</CardDescription>
                 </CardHeader>
                 <CardContent className="text-center">
                   <p className="text-sm text-muted-foreground">Get editable text from any PDF file instantly</p>
+                </CardContent>
+              </Card>
+            </Link>
+          </motion.div>
+
+          <motion.div variants={cardVariant}>
+            <Link href="/image-to-pdf" className="group cursor-pointer block h-full">
+              <Card className="h-full transition-all duration-300 hover:shadow-lg hover:scale-105 hover:border-primary/50">
+                <CardHeader className="text-center pb-4">
+                  <ImageToPdfIcon className="w-20 h-20 mx-auto mb-4 text-primary" />
+                  <CardTitle className="text-2xl">Image to PDF</CardTitle>
+                  <CardDescription className="text-base">Combine multiple images into a single PDF</CardDescription>
+                </CardHeader>
+                <CardContent className="text-center">
+                  <p className="text-sm text-muted-foreground">Convert PNG, JPEG images to PDF with drag & drop reordering</p>
                 </CardContent>
               </Card>
             </Link>

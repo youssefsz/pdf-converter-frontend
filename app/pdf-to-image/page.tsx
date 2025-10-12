@@ -200,8 +200,8 @@ export default function PdfToImagePage() {
                     onDrop={handleDrop}
                     className={`border-2 border-dashed rounded-xl p-12 text-center transition-all cursor-pointer ${
                       isDragging 
-                        ? "border-primary bg-primary/5 scale-105" 
-                        : "border-border hover:border-primary/50"
+                        ? "border-accent bg-accent/5 scale-105" 
+                        : "border-border hover:border-accent/50"
                     }`}
                   >
                     <Upload className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />

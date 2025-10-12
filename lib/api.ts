@@ -148,6 +148,96 @@ export function downloadBlob(blob: Blob, filename: string): void {
 }
 
 /**
+ * Convert multiple images (PNG/JPEG) to a single PDF document
+ * @param files - Array of image files to convert
+ * @param onProgress - Callback for upload progress
+ * @returns Blob containing the generated PDF file
+ */
+export async function convertImagesToPdf(
+  files: File[],
+  onProgress?: (progress: number) => void
+): Promise<Blob> {
+  const formData = new FormData()
+  
+  // Append all images to the form data
+  files.forEach((file) => {
+    formData.append('images', file)
+  })
+
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest()
+
+    // Track upload progress
+    xhr.upload.addEventListener('progress', (e) => {
+      if (e.lengthComputable && onProgress) {
+        const progress = Math.round((e.loaded * 100) / e.total)
+        onProgress(progress)
+      }
+    })
+
+    xhr.addEventListener('load', () => {
+      if (xhr.status === 200) {
+        const blob = xhr.response
+        resolve(blob)
+      } else {
+        try {
+          const error = JSON.parse(xhr.responseText)
+          reject(new Error(error.message || 'Conversion failed'))
+        } catch {
+          reject(new Error('Conversion failed'))
+        }
+      }
+    })
+
+    xhr.addEventListener('error', () => {
+      reject(new Error('Network error occurred'))
+    })
+
+    xhr.addEventListener('abort', () => {
+      reject(new Error('Upload cancelled'))
+    })
+
+    xhr.open('POST', `${API_BASE_URL}/pdf/images-to-pdf`)
+    xhr.responseType = 'blob'
+    xhr.send(formData)
+  })
+}
+
+/**
+ * Validate image files before upload
+ * @param files - Array of files to validate
+ * @returns Validation result with error message if invalid
+ */
+export function validateImageFiles(files: File[]): { valid: boolean; error?: string } {
+  // Check if files exist
+  if (!files || files.length === 0) {
+    return { valid: false, error: 'Please select at least one image' }
+  }
+
+  // Check maximum number of images (20)
+  if (files.length > 20) {
+    return { valid: false, error: 'Maximum 20 images allowed' }
+  }
+
+  // Check each file
+  const maxSize = 10 * 1024 * 1024 // 10MB in bytes
+  
+  for (const file of files) {
+    // Check file type
+    if (!['image/png', 'image/jpeg', 'image/jpg'].includes(file.type)) {
+      return { valid: false, error: 'Only PNG and JPEG images are allowed' }
+    }
+
+    // Check file size
+    if (file.size > maxSize) {
+      return { valid: false, error: `Each file must be less than 10MB. ${file.name} is too large.` }
+    }
+  }
+
+  return { valid: true }
+}
+
+/**
  * Format file size for display
  * @param bytes - File size in bytes
  * @returns Formatted string (e.g., "2.5 MB")
