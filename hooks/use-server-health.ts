@@ -144,13 +144,12 @@ interface UseServerHealthReturn {
  * @returns Server health state and check function
  */
 export function useServerHealth(idleTimeout: number = 5 * 60 * 1000): UseServerHealthReturn {
-  // Initialize state from cookie if available
-  const lastStatusData = getLastStatus()
-  const [status, setStatus] = useState<ServerStatus>(lastStatusData?.status || 'idle')
-  const [lastChecked, setLastChecked] = useState<Date | null>(
-    lastStatusData?.lastChecked ? new Date(lastStatusData.lastChecked) : null
-  )
-  const [error, setError] = useState<string | null>(lastStatusData?.error || null)
+  // Always start with 'idle' to prevent hydration mismatch
+  // Cookie data will be loaded after mount in useEffect
+  const [status, setStatus] = useState<ServerStatus>('idle')
+  const [lastChecked, setLastChecked] = useState<Date | null>(null)
+  const [error, setError] = useState<string | null>(null)
+  const [isMounted, setIsMounted] = useState(false)
   
   // Use refs to track timers and prevent memory leaks
   const idleTimerRef = useRef<NodeJS.Timeout | null>(null)
@@ -238,9 +237,28 @@ export function useServerHealth(idleTimeout: number = 5 * 60 * 1000): UseServerH
   }, [resetIdleTimer])
 
   /**
+   * Load cached status from cookie after mount (client-side only)
+   * This prevents hydration mismatch by not reading cookies during SSR
+   */
+  useEffect(() => {
+    setIsMounted(true)
+    
+    // Load cached status from cookie on client side
+    const lastStatusData = getLastStatus()
+    if (lastStatusData) {
+      setStatus(lastStatusData.status)
+      setLastChecked(lastStatusData.lastChecked ? new Date(lastStatusData.lastChecked) : null)
+      setError(lastStatusData.error)
+    }
+  }, [])
+
+  /**
    * Setup activity listeners and initial health check
    */
   useEffect(() => {
+    // Only proceed after component is mounted
+    if (!isMounted) return
+
     // Perform initial health check on mount
     checkHealth()
 
@@ -268,7 +286,7 @@ export function useServerHealth(idleTimeout: number = 5 * 60 * 1000): UseServerH
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []) // Only run on mount/unmount
+  }, [isMounted]) // Run when mounted state changes
 
   return {
     status,
