@@ -12,6 +12,72 @@ import {
 } from "@/components/ui/tooltip"
 
 /**
+ * Cookie management for rate limiting server status checks
+ */
+const RATE_LIMIT_COOKIE_NAME = 'server_status_checks'
+const MAX_CHECKS_PER_MINUTE = 3
+const TIME_WINDOW_MS = 60000 // 1 minute
+
+/**
+ * Get check timestamps from cookie
+ */
+function getCheckTimestamps(): number[] {
+  if (typeof document === 'undefined') return []
+  
+  const cookies = document.cookie.split(';')
+  const cookie = cookies.find(c => c.trim().startsWith(`${RATE_LIMIT_COOKIE_NAME}=`))
+  
+  if (!cookie) return []
+  
+  try {
+    const value = cookie.split('=')[1]
+    const timestamps = JSON.parse(decodeURIComponent(value))
+    return Array.isArray(timestamps) ? timestamps : []
+  } catch {
+    return []
+  }
+}
+
+/**
+ * Save check timestamps to cookie
+ */
+function saveCheckTimestamps(timestamps: number[]): void {
+  if (typeof document === 'undefined') return
+  
+  const expiryDate = new Date()
+  expiryDate.setMinutes(expiryDate.getMinutes() + 2) // Cookie expires in 2 minutes
+  
+  document.cookie = `${RATE_LIMIT_COOKIE_NAME}=${encodeURIComponent(JSON.stringify(timestamps))}; expires=${expiryDate.toUTCString()}; path=/; SameSite=Strict`
+}
+
+/**
+ * Check if rate limit has been exceeded
+ */
+function isRateLimited(): boolean {
+  const timestamps = getCheckTimestamps()
+  const now = Date.now()
+  
+  // Filter timestamps within the last minute
+  const recentChecks = timestamps.filter(ts => now - ts < TIME_WINDOW_MS)
+  
+  return recentChecks.length >= MAX_CHECKS_PER_MINUTE
+}
+
+/**
+ * Record a new check attempt
+ */
+function recordCheckAttempt(): void {
+  const timestamps = getCheckTimestamps()
+  const now = Date.now()
+  
+  // Filter timestamps within the last minute and add the new one
+  const recentChecks = timestamps.filter(ts => now - ts < TIME_WINDOW_MS)
+  recentChecks.push(now)
+  
+  saveCheckTimestamps(recentChecks)
+}
+
+/**
  * Props for ServerStatusIndicator component
  */
 interface ServerStatusIndicatorProps {
@@ -136,11 +202,11 @@ export function ServerStatusIndicator({
   const getGlowClass = () => {
     switch (status) {
       case 'online':
-        return 'border-2 border-green-500/50 bg-green-500/10 shadow-[0_0_8px_rgba(34,197,94,0.3)] hover:shadow-[0_0_12px_rgba(34,197,94,0.4)] hover:bg-green-500/20'
+        return 'border-2 border-green-500/50 bg-green-500/10 shadow-[0_0_8px_rgba(34,197,94,0.3)] hover:shadow-[0_0_12px_rgba(34,197,94,0.4)] hover:!bg-green-500/20'
       case 'offline':
-        return 'border-2 border-red-500/50 bg-red-500/10 shadow-[0_0_8px_rgba(239,68,68,0.3)] hover:shadow-[0_0_12px_rgba(239,68,68,0.4)] hover:bg-red-500/20'
+        return 'border-2 border-red-500/50 bg-red-500/10 shadow-[0_0_8px_rgba(239,68,68,0.3)] hover:shadow-[0_0_12px_rgba(239,68,68,0.4)] hover:!bg-red-500/20'
       case 'checking':
-        return 'border-2 border-blue-500/50 bg-blue-500/10 shadow-[0_0_8px_rgba(59,130,246,0.3)] hover:shadow-[0_0_12px_rgba(59,130,246,0.4)] hover:bg-blue-500/20'
+        return 'border-2 border-blue-500/50 bg-blue-500/10 shadow-[0_0_8px_rgba(59,130,246,0.3)] hover:shadow-[0_0_12px_rgba(59,130,246,0.4)] hover:!bg-blue-500/20'
       case 'idle':
         return 'border-2 border-gray-400/30 bg-gray-400/5 shadow-[0_0_6px_rgba(156,163,175,0.2)]'
       default:
@@ -149,10 +215,20 @@ export function ServerStatusIndicator({
   }
 
   /**
-   * Handle recheck click
+   * Handle recheck click with rate limiting
    */
   const handleClick = () => {
     if (onRecheck && status !== 'checking') {
+      // Check if rate limited (more than 3 checks in the last minute)
+      if (isRateLimited()) {
+        // Silently prevent the request without changing UI
+        return
+      }
+      
+      // Record this check attempt
+      recordCheckAttempt()
+      
+      // Proceed with the check
       onRecheck()
     }
   }
@@ -199,7 +275,7 @@ export function ServerStatusIndicator({
               size="sm"
               onClick={handleClick}
               disabled={status === 'checking'}
-              className={`flex items-center gap-2 px-3 py-2 rounded-full transition-all duration-300 backdrop-blur-sm ${getGlowClass()} ${className}`}
+              className={`flex items-center gap-2 px-3 py-2 rounded-full transition-all duration-300 backdrop-blur-sm hover:!text-foreground ${getGlowClass()} ${className}`}
               aria-label={getStatusText()}
             >
               {/* Status Icon with Animation */}
