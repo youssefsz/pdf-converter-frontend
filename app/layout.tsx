@@ -118,9 +118,54 @@ export default function RootLayout({
       <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable}`}>
         <ThemeProvider>
           <Suspense fallback={<div>Loading...</div>}>
-            <div className="flex flex-col min-h-screen">
+            <div className="flex flex-col min-h-screen bg-background relative">
+              {/* Dashed Grid Background */}
+              <div 
+                className="fixed inset-0 z-0 
+                  [background-image:linear-gradient(to_right,rgb(231,229,228)_1px,transparent_1px),linear-gradient(to_bottom,rgb(231,229,228)_1px,transparent_1px)]
+                  dark:[background-image:linear-gradient(to_right,rgba(82,82,91,0.4)_1px,transparent_1px),linear-gradient(to_bottom,rgba(82,82,91,0.4)_1px,transparent_1px)]"
+                style={{
+                  backgroundSize: "20px 20px",
+                  backgroundPosition: "0 0, 0 0",
+                  maskImage: `
+                    repeating-linear-gradient(
+                      to right,
+                      black 0px,
+                      black 3px,
+                      transparent 3px,
+                      transparent 8px
+                    ),
+                    repeating-linear-gradient(
+                      to bottom,
+                      black 0px,
+                      black 3px,
+                      transparent 3px,
+                      transparent 8px
+                    )
+                  `,
+                  WebkitMaskImage: `
+                    repeating-linear-gradient(
+                      to right,
+                      black 0px,
+                      black 3px,
+                      transparent 3px,
+                      transparent 8px
+                    ),
+                    repeating-linear-gradient(
+                      to bottom,
+                      black 0px,
+                      black 3px,
+                      transparent 3px,
+                      transparent 8px
+                    )
+                  `,
+                  maskComposite: "intersect",
+                  WebkitMaskComposite: "source-in",
+                }}
+              />
+              
               <Navbar />
-              <div className="flex-1">
+              <div className="flex-1 relative z-10">
                 {children}
               </div>
               <Footer />
