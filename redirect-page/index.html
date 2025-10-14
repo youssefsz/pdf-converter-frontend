@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecting to PDF Tools</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Dark mode colors from globals.css */
+            --background: #2E2E2E;
+            --foreground: #EBE9E9;
+            --primary: #E57373;
+            --primary-foreground: #FFFFFF;
+            --accent: #F4E67D;
+            --accent-foreground: #3C3C3C;
+            --border: #E57373;
+            --muted: #494949;
+            --muted-foreground: #B3B3B3;
+            --shadow-color: #a72828;
+            --radius: 0.525rem;
+            --font-sans: 'Poppins', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--background);
+            color: var(--foreground);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .logo-container {
+            margin-bottom: 48px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .logo {
+            width: 200px;
+            height: auto;
+        }
+
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--foreground);
+        }
+
+        p {
+            font-size: 16px;
+            color: var(--muted-foreground);
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 8px;
+            background-color: var(--muted);
+            border-radius: var(--radius);
+            overflow: hidden;
+            margin-bottom: 32px;
+            position: relative;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background-color: var(--primary);
+            border-radius: var(--radius);
+            width: 0%;
+            animation: progress 4s linear forwards;
+            box-shadow: 0 0 10px rgba(229, 115, 115, 0.5);
+        }
+
+        @keyframes progress {
+            0% {
+                width: 0%;
+            }
+            100% {
+                width: 100%;
+            }
+        }
+
+        .button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 32px;
+            font-size: 16px;
+            font-weight: 600;
+            font-family: var(--font-sans);
+            color: var(--primary-foreground);
+            background-color: var(--primary);
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            box-shadow: 3px 3px 0px 0px var(--shadow-color);
+            position: relative;
+        }
+
+        .button:hover {
+            transform: translate(1px, 1px);
+            box-shadow: 2px 2px 0px 0px var(--shadow-color);
+        }
+
+        .button:active {
+            transform: translate(3px, 3px);
+            box-shadow: 0px 0px 0px 0px var(--shadow-color);
+        }
+
+        .timer {
+            font-size: 14px;
+            color: var(--muted-foreground);
+            margin-bottom: 24px;
+            font-weight: 500;
+        }
+
+        .timer-number {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        @media (max-width: 640px) {
+            h1 {
+                font-size: 24px;
+            }
+
+            p {
+                font-size: 14px;
+            }
+
+            .logo {
+                width: 160px;
+            }
+
+            .button {
+                padding: 10px 24px;
+                font-size: 14px;
+            }
+        }
+
+        /* Smooth fade-in animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .container > * {
+            animation: fadeIn 0.6s ease-out forwards;
+            opacity: 0;
+        }
+
+        .logo-container {
+            animation-delay: 0.1s;
+        }
+
+        h1 {
+            animation-delay: 0.2s;
+        }
+
+        p {
+            animation-delay: 0.3s;
+        }
+
+        .timer {
+            animation-delay: 0.4s;
+        }
+
+        .progress-container {
+            animation-delay: 0.5s;
+        }
+
+        .button {
+            animation-delay: 0.6s;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo-container">
+            <img src="logo.svg" alt="PDF Tools Logo" class="logo">
+        </div>
+        
+        <h1>Redirecting to PDF Tools</h1>
+        
+        <p>You will be automatically redirected to our new platform. Please wait a moment or click the button below to continue immediately.</p>
+        
+        <div class="timer">
+            Redirecting in <span class="timer-number" id="countdown">4</span> seconds...
+        </div>
+        
+        <div class="progress-container">
+            <div class="progress-bar"></div>
+        </div>
+        
+        <a href="https://pdf-tools.youssef.tn/" class="button" id="continueBtn">
+            Continue Now
+        </a>
+    </div>
+
+    <script>
+        // Countdown timer
+        let seconds = 4;
+        const countdownElement = document.getElementById('countdown');
+        const redirectUrl = 'https://pdf-tools.youssef.tn/';
+        
+        // Update countdown every second
+        const countdownInterval = setInterval(() => {
+            seconds--;
+            if (seconds > 0) {
+                countdownElement.textContent = seconds;
+            } else {
+                clearInterval(countdownInterval);
+                window.location.href = redirectUrl;
+            }
+        }, 1000);
+
+        // Manual redirect on button click
+        document.getElementById('continueBtn').addEventListener('click', (e) => {
+            e.preventDefault();
+            clearInterval(countdownInterval);
+            window.location.href = redirectUrl;
+        });
+    </script>
+</body>
+</html>
+
