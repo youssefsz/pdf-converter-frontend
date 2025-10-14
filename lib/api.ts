@@ -337,8 +337,7 @@ export async function checkServerHealth(): Promise<ServerHealthResponse> {
       headers: {
         'Content-Type': 'application/json',
       },
-      // Set a timeout to prevent hanging requests
-      signal: AbortSignal.timeout(10000), // 10 second timeout
+      // No timeout - allow request to wait for server (e.g., cold start on Render)
     })
 
     if (!response.ok) {
@@ -348,11 +347,9 @@ export async function checkServerHealth(): Promise<ServerHealthResponse> {
     const data: ServerHealthResponse = await response.json()
     return data
   } catch (error) {
-    // Handle network errors, timeouts, and other failures
+    // Handle network errors and other failures
     if (error instanceof Error) {
-      throw new Error(error.name === 'TimeoutError' 
-        ? 'Server health check timed out' 
-        : error.message || 'Failed to reach server')
+      throw new Error(error.message || 'Failed to reach server')
     }
     throw new Error('Failed to reach server')
   }
