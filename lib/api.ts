@@ -3,7 +3,7 @@
  * Base URL for PDF Converter Backend API
  */
 
-export const API_BASE_URL = 'https://pdf-converter-sj6c.onrender.com/api'
+export const API_BASE_URL = 'https://pdf.youssef.run.place/api'
 
 /**
  * Convert PDF to Images (PNG or JPEG)
@@ -158,7 +158,7 @@ export async function convertImagesToPdf(
   onProgress?: (progress: number) => void
 ): Promise<Blob> {
   const formData = new FormData()
-  
+
   // Append all images to the form data
   files.forEach((file) => {
     formData.append('images', file)
@@ -221,7 +221,7 @@ export function validateImageFiles(files: File[]): { valid: boolean; error?: str
 
   // Check each file
   const maxSize = 10 * 1024 * 1024 // 10MB in bytes
-  
+
   for (const file of files) {
     // Check file type
     if (!['image/png', 'image/jpeg', 'image/jpg'].includes(file.type)) {
