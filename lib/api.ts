@@ -238,6 +238,78 @@ export function validateImageFiles(files: File[]): { valid: boolean; error?: str
 }
 
 /**
+ * Validate Text file before upload
+ * @param file - File to validate
+ * @returns Validation result with error message if invalid
+ */
+export function validateTextFile(file: File): { valid: boolean; error?: string } {
+  // Check file type
+  if (file.type !== 'text/plain') {
+    return { valid: false, error: 'Please select a Text file (.txt)' }
+  }
+
+  // Check file size (10MB limit)
+  const maxSize = 10 * 1024 * 1024 // 10MB in bytes
+  if (file.size > maxSize) {
+    return { valid: false, error: 'File size must be less than 10MB' }
+  }
+
+  return { valid: true }
+}
+
+/**
+ * Convert Text to PDF
+ * @param file - Text file to convert
+ * @param onProgress - Callback for upload progress
+ * @returns Blob containing the generated PDF file
+ */
+export async function convertTextToPdf(
+  file: File,
+  onProgress?: (progress: number) => void
+): Promise<Blob> {
+  const formData = new FormData()
+  formData.append('text', file)
+
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest()
+
+    // Track upload progress
+    xhr.upload.addEventListener('progress', (e) => {
+      if (e.lengthComputable && onProgress) {
+        const progress = Math.round((e.loaded * 100) / e.total)
+        onProgress(progress)
+      }
+    })
+
+    xhr.addEventListener('load', () => {
+      if (xhr.status === 200) {
+        const blob = xhr.response
+        resolve(blob)
+      } else {
+        try {
+          const error = JSON.parse(xhr.responseText)
+          reject(new Error(error.message || 'Conversion failed'))
+        } catch {
+          reject(new Error('Conversion failed'))
+        }
+      }
+    })
+
+    xhr.addEventListener('error', () => {
+      reject(new Error('Network error occurred'))
+    })
+
+    xhr.addEventListener('abort', () => {
+      reject(new Error('Upload cancelled'))
+    })
+
+    xhr.open('POST', `${API_BASE_URL}/pdf/text-to-pdf`)
+    xhr.responseType = 'blob'
+    xhr.send(formData)
+  })
+}
+
+/**
  * Format file size for display
  * @param bytes - File size in bytes
  * @returns Formatted string (e.g., "2.5 MB")

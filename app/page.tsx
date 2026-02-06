@@ -5,6 +5,7 @@ import { motion } from "framer-motion"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { PdfToImageIcon } from "@/components/ui/pdf-to-image-icon"
 import { PdfToTextIcon } from "@/components/ui/pdf-to-text-icon"
+import { TextToPdfIcon } from "@/components/ui/text-to-pdf-icon"
 import { ImageToPdfIcon } from "@/components/ui/image-to-pdf-icon"
 import { PdfToDocxIcon } from "@/components/ui/pdf-to-docx-icon"
 import { FileStack, Split, Minimize2, RotateCw, Droplet, Lock, Edit } from "lucide-react"
@@ -117,6 +118,20 @@ export default function HomePage() {
               </Card>
             </Link>
           </motion.div>
+           <motion.div variants={cardVariant}>
+            <Link href="/image-to-pdf" className="group cursor-pointer block h-full">
+              <Card className="h-full transition-all duration-300 hover:shadow-lg hover:scale-105 hover:border-primary/50">
+                <CardHeader className="text-center pb-4">
+                  <ImageToPdfIcon className="w-20 h-20 mx-auto mb-4 text-primary" />
+                  <CardTitle className="text-2xl">Image to PDF</CardTitle>
+                  <CardDescription className="text-base">Combine multiple images into a single PDF</CardDescription>
+                </CardHeader>
+                <CardContent className="text-center">
+                  <p className="text-sm text-muted-foreground">Convert PNG, JPEG images to PDF with drag & drop reordering</p>
+                </CardContent>
+              </Card>
+            </Link>
+          </motion.div>
 
           <motion.div variants={cardVariant}>
             <Link href="/pdf-to-text" className="group cursor-pointer block h-full">
@@ -134,19 +149,21 @@ export default function HomePage() {
           </motion.div>
 
           <motion.div variants={cardVariant}>
-            <Link href="/image-to-pdf" className="group cursor-pointer block h-full">
+            <Link href="/text-to-pdf" className="group cursor-pointer block h-full">
               <Card className="h-full transition-all duration-300 hover:shadow-lg hover:scale-105 hover:border-primary/50">
                 <CardHeader className="text-center pb-4">
-                  <ImageToPdfIcon className="w-20 h-20 mx-auto mb-4 text-primary" />
-                  <CardTitle className="text-2xl">Image to PDF</CardTitle>
-                  <CardDescription className="text-base">Combine multiple images into a single PDF</CardDescription>
+                  <TextToPdfIcon className="w-20 h-20 mx-auto mb-4 text-primary" />
+                  <CardTitle className="text-2xl">Text to PDF</CardTitle>
+                  <CardDescription className="text-base">Convert text files to PDF documents</CardDescription>
                 </CardHeader>
                 <CardContent className="text-center">
-                  <p className="text-sm text-muted-foreground">Convert PNG, JPEG images to PDF with drag & drop reordering</p>
+                  <p className="text-sm text-muted-foreground">Convert .txt files to professional PDFs instantly</p>
                 </CardContent>
               </Card>
             </Link>
           </motion.div>
+
+         
 
           <motion.div variants={cardVariant}>
             <Link href="/pdf-to-docx" className="group cursor-pointer block h-full">
@@ -162,6 +179,8 @@ export default function HomePage() {
               </Card>
             </Link>
           </motion.div>
+
+          
 
           {/* Coming Soon Tools */}
           <motion.div className="relative group" variants={cardVariant}>
