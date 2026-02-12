@@ -48,6 +48,14 @@ export function Footer() {
                     About
                   </Link>
                 </li>
+                <li>
+                  <Link 
+                    href="/docs" 
+                    className="text-sm text-muted-foreground hover:text-primary transition-colors inline-block cursor-pointer"
+                  >
+                    API Docs
+                  </Link>
+                </li>
               </ul>
             </div>
 

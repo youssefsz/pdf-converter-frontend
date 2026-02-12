@@ -3,7 +3,7 @@
  * Base URL for PDF Converter Backend API
  */
 
-export const API_BASE_URL = 'https://pdf.youssef.run.place/api'
+export const API_BASE_URL = 'https://pdf.dhibi.tn/api'
 
 /**
  * Convert PDF to Images (PNG or JPEG)

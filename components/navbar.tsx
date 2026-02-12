@@ -21,6 +21,7 @@ export function Navbar() {
   const navLinks = [
     { href: "/", label: "Home" },
     { href: "/about", label: "About" },
+    { href: "/docs", label: "API Docs" },
   ]
 
   const toggleMobileMenu = () => {

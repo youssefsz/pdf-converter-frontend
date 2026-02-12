@@ -5,7 +5,7 @@ Complete API reference for frontend integration. This API provides PDF conversio
 ## 📋 Base URL
 
 ```
-http://localhost:3000/api
+https://pdf.dhibi.tn/api
 ```
 
 Replace with your production URL when deployed.
@@ -37,14 +37,14 @@ Check if the server is running.
 
 **Example (JavaScript/Fetch):**
 ```javascript
-const response = await fetch('http://localhost:3000/api/health');
+const response = await fetch('https://pdf.dhibi.tn/api/health');
 const data = await response.json();
 console.log(data);
 ```
 
 **Example (cURL):**
 ```bash
-curl http://localhost:3000/api/health
+curl https://pdf.dhibi.tn/api/health
 ```
 
 ---
@@ -71,7 +71,7 @@ Check if the PDF conversion service is operational and get service information.
 
 **Example (JavaScript/Fetch):**
 ```javascript
-const response = await fetch('http://localhost:3000/api/pdf/health');
+const response = await fetch('https://pdf.dhibi.tn/api/pdf/health');
 const data = await response.json();
 console.log(data);
 ```
@@ -121,7 +121,7 @@ const convertPdfToImages = async (pdfFile, format = 'png') => {
 
   try {
     const response = await axios.post(
-      `http://localhost:3000/api/pdf/convert?format=${format}`,
+      `https://pdf.dhibi.tn/api/pdf/convert?format=${format}`,
       formData,
       {
         responseType: 'blob', // Important for binary data
@@ -164,7 +164,7 @@ async function convertPdfToImages(pdfFile, format = 'png') {
 
   try {
     const response = await fetch(
-      `http://localhost:3000/api/pdf/convert?format=${format}`,
+      `https://pdf.dhibi.tn/api/pdf/convert?format=${format}`,
       {
         method: 'POST',
         body: formData,
@@ -223,7 +223,7 @@ export default {
 
       try {
         const response = await fetch(
-          `http://localhost:3000/api/pdf/convert?format=${format}`,
+          `https://pdf.dhibi.tn/api/pdf/convert?format=${format}`,
           {
             method: 'POST',
             body: formData,
@@ -261,12 +261,12 @@ export default {
 **cURL (Command Line):**
 ```bash
 # Convert to PNG (default)
-curl -X POST "http://localhost:3000/api/pdf/convert?format=png" \
+curl -X POST "https://pdf.dhibi.tn/api/pdf/convert?format=png" \
   -F "pdf=@document.pdf" \
   -o converted.zip
 
 # Convert to JPEG
-curl -X POST "http://localhost:3000/api/pdf/convert?format=jpeg" \
+curl -X POST "https://pdf.dhibi.tn/api/pdf/convert?format=jpeg" \
   -F "pdf=@document.pdf" \
   -o converted.zip
 ```
@@ -315,7 +315,7 @@ const convertImagesToPdf = async (imageFiles) => {
 
   try {
     const response = await axios.post(
-      'http://localhost:3000/api/pdf/images-to-pdf',
+      'https://pdf.dhibi.tn/api/pdf/images-to-pdf',
       formData,
       {
         responseType: 'blob', // Important for binary data
@@ -369,7 +369,7 @@ async function convertImagesToPdf(imageFiles) {
 
   try {
     const response = await fetch(
-      'http://localhost:3000/api/pdf/images-to-pdf',
+      'https://pdf.dhibi.tn/api/pdf/images-to-pdf',
       {
         method: 'POST',
         body: formData,
@@ -459,7 +459,7 @@ export default {
 
       try {
         const response = await fetch(
-          'http://localhost:3000/api/pdf/images-to-pdf',
+          'https://pdf.dhibi.tn/api/pdf/images-to-pdf',
           {
             method: 'POST',
             body: formData,
@@ -573,7 +573,7 @@ const ImagesToPdfConverter = () => {
 
     try {
       const response = await axios.post(
-        'http://localhost:3000/api/pdf/images-to-pdf',
+        'https://pdf.dhibi.tn/api/pdf/images-to-pdf',
         formData,
         { responseType: 'blob' }
       );
@@ -645,7 +645,7 @@ export default ImagesToPdfConverter;
 **cURL (Command Line):**
 ```bash
 # Convert multiple images to PDF
-curl -X POST "http://localhost:3000/api/pdf/images-to-pdf" \
+curl -X POST "https://pdf.dhibi.tn/api/pdf/images-to-pdf" \
   -F "images=@image1.png" \
   -F "images=@image2.jpg" \
   -F "images=@image3.png" \
@@ -708,7 +708,7 @@ const convertPdfToDocx = async (pdfFile, options = {}) => {
 
   try {
     const response = await axios.post(
-      'http://localhost:3000/api/pdf/pdf-to-docx',
+      'https://pdf.dhibi.tn/api/pdf/pdf-to-docx',
       formData,
       {
         params: {
@@ -772,7 +772,7 @@ async function convertPdfToDocx(pdfFile, options = {}) {
 
   try {
     const response = await fetch(
-      `http://localhost:3000/api/pdf/pdf-to-docx?${queryParams}`,
+      `https://pdf.dhibi.tn/api/pdf/pdf-to-docx?${queryParams}`,
       {
         method: 'POST',
         body: formData,
@@ -820,22 +820,22 @@ document.getElementById('pdfInput').addEventListener('change', async (e) => {
 **cURL Examples:**
 ```bash
 # Basic conversion (with all defaults)
-curl -X POST http://localhost:3000/api/pdf/pdf-to-docx \
+curl -X POST https://pdf.dhibi.tn/api/pdf/pdf-to-docx \
   -F "pdf=@document.pdf" \
   -o document.docx
 
 # Without images
-curl -X POST "http://localhost:3000/api/pdf/pdf-to-docx?includeImages=false" \
+curl -X POST "https://pdf.dhibi.tn/api/pdf/pdf-to-docx?includeImages=false" \
   -F "pdf=@document.pdf" \
   -o document.docx
 
 # Without page breaks (continuous document)
-curl -X POST "http://localhost:3000/api/pdf/pdf-to-docx?preservePageBreaks=false" \
+curl -X POST "https://pdf.dhibi.tn/api/pdf/pdf-to-docx?preservePageBreaks=false" \
   -F "pdf=@document.pdf" \
   -o document.docx
 
 # Custom options
-curl -X POST "http://localhost:3000/api/pdf/pdf-to-docx?includeImages=true&preservePageBreaks=true" \
+curl -X POST "https://pdf.dhibi.tn/api/pdf/pdf-to-docx?includeImages=true&preservePageBreaks=true" \
   -F "pdf=@document.pdf" \
   -o document.docx
 ```
@@ -892,7 +892,7 @@ const extractPdfContent = async (pdfFile) => {
 
   try {
     const response = await axios.post(
-      'http://localhost:3000/api/pdf/extract',
+      'https://pdf.dhibi.tn/api/pdf/extract',
       formData,
       {
         responseType: 'blob',
@@ -941,7 +941,7 @@ async function extractPdfContent(pdfFile) {
   formData.append('pdf', pdfFile);
 
   try {
-    const response = await fetch('http://localhost:3000/api/pdf/extract', {
+    const response = await fetch('https://pdf.dhibi.tn/api/pdf/extract', {
       method: 'POST',
       body: formData,
     });
@@ -973,7 +973,7 @@ async function extractPdfContent(pdfFile) {
 
 **cURL (Command Line):**
 ```bash
-curl -X POST "http://localhost:3000/api/pdf/extract" \
+curl -X POST "https://pdf.dhibi.tn/api/pdf/extract" \
   -F "pdf=@document.pdf" \
   -o extracted_content.zip
 ```
@@ -998,310 +998,3 @@ All endpoints return consistent error responses in JSON format:
 |-------------|---------|---------------|
 | `400` | Bad Request | Missing file, invalid format, invalid parameters |
 | `413` | Payload Too Large | File exceeds 10MB limit |
-| `429` | Too Many Requests | Rate limit exceeded (100 req/15min) |
-| `500` | Internal Server Error | PDF processing failed, server error |
-
-### Frontend Error Handling Example
-
-```javascript
-async function handlePdfOperation(file) {
-  try {
-    const response = await fetch('http://localhost:3000/api/pdf/convert', {
-      method: 'POST',
-      body: formData,
-    });
-
-    // Handle non-OK responses
-    if (!response.ok) {
-      const errorData = await response.json();
-      
-      switch (response.status) {
-        case 400:
-          alert(`Invalid request: ${errorData.message}`);
-          break;
-        case 413:
-          alert('File is too large. Maximum size is 10MB.');
-          break;
-        case 429:
-          alert('Too many requests. Please try again later.');
-          break;
-        case 500:
-          alert(`Server error: ${errorData.message}`);
-          break;
-        default:
-          alert(`Error: ${errorData.message}`);
-      }
-      
-      throw new Error(errorData.message);
-    }
-
-    return await response.blob();
-  } catch (error) {
-    console.error('Operation failed:', error);
-    throw error;
-  }
-}
-```
-
----
-
-## 📊 Rate Limiting
-
-- **Limit:** 100 requests per 15 minutes per IP address
-- **Headers:** Rate limit info is included in response headers:
-  - `X-RateLimit-Limit` - Maximum requests allowed
-  - `X-RateLimit-Remaining` - Requests remaining
-  - `X-RateLimit-Reset` - Time when limit resets
-
-**Example Response Headers:**
-```
-X-RateLimit-Limit: 100
-X-RateLimit-Remaining: 95
-X-RateLimit-Reset: 1697012345678
-```
-
----
-
-## 🔐 CORS Configuration
-
-By default, CORS is configured to allow all origins (`*`). For production, configure specific origins in the `.env` file:
-
-```env
-CORS_ORIGIN=https://your-frontend-domain.com
-```
-
-Multiple origins:
-```env
-CORS_ORIGIN=https://app.example.com,https://admin.example.com
-```
-
----
-
-## 📝 File Size Limits
-
-- **Maximum file size:** 10MB
-- **Supported file type:** PDF only (`.pdf`)
-- **MIME type validation:** `application/pdf`
-
----
-
-## 🎯 Complete React Component Example
-
-Here's a complete React component with both conversion and extraction:
-
-```javascript
-import React, { useState } from 'react';
-import axios from 'axios';
-
-const PdfConverter = () => {
-  const [file, setFile] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [progress, setProgress] = useState(0);
-
-  const API_BASE_URL = 'http://localhost:3000/api';
-
-  const handleFileChange = (e) => {
-    const selectedFile = e.target.files[0];
-    
-    if (selectedFile) {
-      // Validate file type
-      if (selectedFile.type !== 'application/pdf') {
-        setError('Please select a PDF file');
-        return;
-      }
-      
-      // Validate file size (10MB)
-      if (selectedFile.size > 10 * 1024 * 1024) {
-        setError('File size must be less than 10MB');
-        return;
-      }
-      
-      setFile(selectedFile);
-      setError(null);
-    }
-  };
-
-  const handleConvert = async (format = 'png') => {
-    if (!file) {
-      setError('Please select a file first');
-      return;
-    }
-
-    setLoading(true);
-    setError(null);
-    setProgress(0);
-
-    const formData = new FormData();
-    formData.append('pdf', file);
-
-    try {
-      const response = await axios.post(
-        `${API_BASE_URL}/pdf/convert?format=${format}`,
-        formData,
-        {
-          responseType: 'blob',
-          onUploadProgress: (progressEvent) => {
-            const percentCompleted = Math.round(
-              (progressEvent.loaded * 100) / progressEvent.total
-            );
-            setProgress(percentCompleted);
-          },
-        }
-      );
-
-      // Download the result
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', `converted_${format}.zip`);
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-      window.URL.revokeObjectURL(url);
-
-    } catch (err) {
-      setError(err.response?.data?.message || 'Conversion failed');
-    } finally {
-      setLoading(false);
-      setProgress(0);
-    }
-  };
-
-  const handleExtract = async () => {
-    if (!file) {
-      setError('Please select a file first');
-      return;
-    }
-
-    setLoading(true);
-    setError(null);
-    setProgress(0);
-
-    const formData = new FormData();
-    formData.append('pdf', file);
-
-    try {
-      const response = await axios.post(
-        `${API_BASE_URL}/pdf/extract`,
-        formData,
-        {
-          responseType: 'blob',
-          onUploadProgress: (progressEvent) => {
-            const percentCompleted = Math.round(
-              (progressEvent.loaded * 100) / progressEvent.total
-            );
-            setProgress(percentCompleted);
-          },
-        }
-      );
-
-      // Download the result
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', 'extracted_content.zip');
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-      window.URL.revokeObjectURL(url);
-
-    } catch (err) {
-      setError(err.response?.data?.message || 'Extraction failed');
-    } finally {
-      setLoading(false);
-      setProgress(0);
-    }
-  };
-
-  return (
-    <div className="pdf-converter">
-      <h2>PDF Converter</h2>
-      
-      <input
-        type="file"
-        accept=".pdf"
-        onChange={handleFileChange}
-        disabled={loading}
-      />
-
-      {file && <p>Selected: {file.name}</p>}
-
-      {error && <div className="error">{error}</div>}
-
-      {loading && (
-        <div className="progress">
-          <div className="progress-bar" style={{ width: `${progress}%` }}>
-            {progress}%
-          </div>
-        </div>
-      )}
-
-      <div className="actions">
-        <button
-          onClick={() => handleConvert('png')}
-          disabled={!file || loading}
-        >
-          Convert to PNG
-        </button>
-        
-        <button
-          onClick={() => handleConvert('jpeg')}
-          disabled={!file || loading}
-        >
-          Convert to JPEG
-        </button>
-        
-        <button
-          onClick={handleExtract}
-          disabled={!file || loading}
-        >
-          Extract Content
-        </button>
-      </div>
-    </div>
-  );
-};
-
-export default PdfConverter;
-```
-
----
-
-## 🌐 Production Deployment
-
-When deploying to production:
-
-1. **Update API Base URL:**
-```javascript
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://your-api-domain.com/api';
-```
-
-2. **Configure CORS on server** with your frontend domain
-
-3. **Handle HTTPS** - Ensure your API uses HTTPS in production
-
-4. **Environment Variables:**
-```bash
-# .env.production
-REACT_APP_API_URL=https://your-api-domain.com/api
-```
-
----
-
-## 💡 Tips & Best Practices
-
-1. **Always validate files on the frontend** before uploading (file type, size)
-2. **Show upload progress** to improve user experience
-3. **Handle errors gracefully** with user-friendly messages
-4. **Implement retry logic** for failed requests
-5. **Consider chunked uploads** for very large files
-6. **Cache health check results** to reduce unnecessary requests
-7. **Use loading states** to prevent duplicate requests
-
----
-
-## Support
-
-For issues or questions, refer to the main `README.md` or contact the development team.
-
