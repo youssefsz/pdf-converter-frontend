@@ -116,7 +116,12 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable}`}>
-        <ThemeProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
           <Suspense fallback={<div>Loading...</div>}>
             <div className="flex flex-col min-h-screen bg-background relative">
               {/* Dashed Grid Background */}

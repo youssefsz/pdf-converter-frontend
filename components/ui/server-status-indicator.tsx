@@ -238,36 +238,6 @@ export function ServerStatusIndicator({
       <Tooltip>
         <TooltipTrigger asChild>
           <motion.div
-            animate={
-              status === 'online' || status === 'offline'
-                ? {
-                    boxShadow: [
-                      status === 'online' 
-                        ? '0 0 8px rgba(34, 197, 94, 0.3)' 
-                        : '0 0 8px rgba(239, 68, 68, 0.3)',
-                      status === 'online'
-                        ? '0 0 15px rgba(34, 197, 94, 0.5)'
-                        : '0 0 15px rgba(239, 68, 68, 0.5)',
-                      status === 'online'
-                        ? '0 0 8px rgba(34, 197, 94, 0.3)'
-                        : '0 0 8px rgba(239, 68, 68, 0.3)',
-                    ],
-                  }
-                : status === 'checking'
-                ? {
-                    boxShadow: [
-                      '0 0 8px rgba(59, 130, 246, 0.3)',
-                      '0 0 12px rgba(59, 130, 246, 0.4)',
-                      '0 0 8px rgba(59, 130, 246, 0.3)',
-                    ],
-                  }
-                : {}
-            }
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
             className="rounded-full"
           >
             <Button
@@ -288,46 +258,16 @@ export function ServerStatusIndicator({
                 {getStatusIcon()}
               </motion.div>
 
-            {/* Status Dot - Pulsing for online/offline */}
+            {/* Status Dot */}
             <div className="relative flex items-center">
-              <motion.div
+              <div
                 className={`h-2 w-2 rounded-full ${
                   status === 'online' ? 'bg-green-500' : 
                   status === 'offline' ? 'bg-red-500' : 
                   status === 'checking' ? 'bg-blue-500' :
                   'bg-gray-400'
                 }`}
-                animate={
-                  status === 'online' || status === 'offline'
-                    ? {
-                        scale: [1, 1.2, 1],
-                        opacity: [1, 0.8, 1],
-                      }
-                    : {}
-                }
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
               />
-              
-              {/* Ripple effect for online status */}
-              <AnimatePresence>
-                {status === 'online' && (
-                  <motion.div
-                    className="absolute inset-0 rounded-full bg-green-500"
-                    initial={{ scale: 1, opacity: 0.6 }}
-                    animate={{ scale: 2.5, opacity: 0 }}
-                    exit={{ opacity: 0 }}
-                    transition={{
-                      duration: 1.5,
-                      repeat: Infinity,
-                      ease: "easeOut",
-                    }}
-                  />
-                )}
-              </AnimatePresence>
             </div>
 
             {/* Status Text - Hidden on mobile, shown on desktop */}
